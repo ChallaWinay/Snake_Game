@@ -1,6 +1,7 @@
 import streamlit as st
 import time
 import random
+from streamlit_keyup import keyup
 
 # Game constants
 GRID_SIZE = 20
@@ -107,6 +108,21 @@ def main():
     with col2:
         if st.button("⬇️"):
             change_direction(DOWN)
+
+    # Keyboard Controls
+    # Note: keyup component will trigger a rerun when a key is released.
+    # We use a unique key for the component to avoid conflicts, but we might need to reset it or handle continuous input.
+    # For simplicity, we just check the value.
+    key = keyup(key="game_keys", debounce=100)
+    
+    if key == "ArrowUp":
+        change_direction(UP)
+    elif key == "ArrowDown":
+        change_direction(DOWN)
+    elif key == "ArrowLeft":
+        change_direction(LEFT)
+    elif key == "ArrowRight":
+        change_direction(RIGHT)
 
     # Game Loop (Manual refresh for now to keep it simple, or auto-rerun)
     # Streamlit doesn't natively support a game loop well without 'st.empty' and 'time.sleep' blocking interaction.
